@@ -1,12 +1,24 @@
 // See https://observablehq.com/framework/config for documentation.
 export default {
   // The app’s title; used in the sidebar and webpage titles.
-  title: "Student Project Template 2026",
+  title: "Analyse historique de l'évolution des plans d'eau",
 
   // The pages and sections in the sidebar. If you don’t specify this option,
   // all pages will be listed in alphabetical order. Listing pages explicitly
   // lets you organize them into sections and have unlisted pages.
   pages: [
+    { name: "Méthodologie",
+      path: "/pages/methodology"
+    },
+    { name: "Visualisation des données",
+      path: "pages/visualization"
+    },
+    { name: "Analyse",
+      path: "pages/analysis"
+    },
+    { name: "Références",
+      path: "pages/references"
+    },
     {
       name: "1 - Framework Basics",
       pages: [
@@ -45,7 +57,8 @@ export default {
   ],
 
   // Content to add to the head of the page, e.g. for a favicon:
-  head: '<link rel="icon" href="observable.png" type="image/png" sizes="32x32">',
+  head: `<link rel="icon" href="observable.png" type="image/png" sizes="32x32">
+        <link rel="stylesheet" href="./styles/styles.css">`,
 
   // The path to the source root.
   root: "src",
@@ -53,7 +66,7 @@ export default {
   // Some additional configuration options and their defaults:
   theme: "light", // try "light", "dark", "slate", etc.
   // header: "", // what to show in the header (HTML)
-  footer: "2025-2026 / Built with Observable for the course <i>Histoire urbaine digitale: Lausanne Time Machine</i>.", // what to show in the footer (HTML)
+  footer: "Ilan Baud, Szabina Horvath-Mikulas, Philippe Pache, Mathilde Peruzzo, Dorine Walther <br> 2025-2026 / Built with Observable for the course <i>Histoire urbaine digitale: Lausanne Time Machine</i>.", // what to show in the footer (HTML)
   // sidebar: true, // whether to show the sidebar
   // toc: true, // whether to show the table of contents
   pager: false, // whether to show previous & next links in the footer

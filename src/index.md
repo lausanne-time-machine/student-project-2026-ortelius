@@ -1,6 +1,18 @@
-# Student Project Template 2026
+<div class="title">
+Analyse historique de l'évolution des plans d'eau
+</div>
 
-This is a template repository for student projects in the course *Histoire Urbaine Digitale - Lausanne Time Machine* (2025-2026) at EPFL.
+## Projet - HUM-454 Histoire urbaine digitale
+
+Ilan Baud, Szabina Horvath-Mikulas, Philippe Pache, Mathilde Peruzzo, Dorine Walther
+
+## Introduction
+
+TODO
+
+## Problématique
+
+TODO
 
 ---
 
