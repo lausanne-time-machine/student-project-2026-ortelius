@@ -64,7 +64,7 @@ export default {
   root: "src",
 
   // Some additional configuration options and their defaults:
-  theme: ["air", "wide"], // try "light", "dark", "slate", etc.
+  theme: ["air"], // try "light", "dark", "slate", etc.
   // header: "", // what to show in the header (HTML)
   footer: "Ilan Baud, Szabina Horvath-Mikulas, Philippe Pache, Mathilde Peruzzo, Dorine Walther <br> 2025-2026 / Built with Observable for the course <i>Histoire urbaine digitale: Lausanne Time Machine</i>.", // what to show in the footer (HTML)
   // sidebar: true, // whether to show the sidebar

@@ -2,4 +2,10 @@
 title: Méthodologie
 ---
 
-# Méthodologie
+<div class="content">
+
+<h3>Méthodologie</h3>
+
+<p> TODO </p>
+
+</div>
