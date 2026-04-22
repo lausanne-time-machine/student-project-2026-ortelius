@@ -69,18 +69,17 @@ const selectLeft = Inputs.select(lausanneLayers, {
   format: d => d.label,
   value: lausanneLayers.find(d => d.name === "1831_Berney")
 })
+selectLeft.classList.add("observable-container");
 
 const selectRight = Inputs.select(lausanneLayers, {
   label: "Historical map",
   format: d => d.label,
   value: lausanneLayers.find(d => d.name === "1831_Berney")
 });
+selectRight.classList.add("observable-container");
 
 const mapLayerLeft = Generators.input(selectLeft);
 const mapLayerRight = Generators.input(selectRight);
-
-leftCol.appendChild(selectLeft);
-rightCol.appendChild(selectRight);
 ```
 
 ```js
@@ -88,14 +87,21 @@ rightCol.appendChild(selectRight);
 function wmtsUrl(layerName) {
   return `https://geo-timemachine.epfl.ch/geoserver/gwc/service/wmts/rest/TimeMachine:${layerName}/{style}/{TileMatrixSet}/{TileMatrixSet}:{z}/{y}/{x}?format=image/png`;
 }
+```
 
+```js
 // Create map with OSM base layer
 
-const mapDivLeft = display(document.createElement("div"));
+const mapDivLeft = document.createElement("div");
 mapDivLeft.style = "height: 560px; margin: 0em 0; width: 400px";
 
-const mapDivRight = display(document.createElement("div"));
+const mapDivRight = document.createElement("div");
 mapDivRight.style = "height: 560px; margin: 0em 0; width: 400px";
+
+// finish global layout
+
+leftCol.appendChild(selectLeft);
+rightCol.appendChild(selectRight);
 
 leftCol.appendChild(mapDivLeft);
 rightCol.appendChild(mapDivRight);
@@ -127,12 +133,12 @@ syncMaps(histMapLeft, histMapRight);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  opacity: 0.4
+  opacity: 0.5
 }).addTo(histMapLeft);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
-  opacity: 0.4
+  opacity: 0.5
 }).addTo(histMapRight);
 
 invalidation.then(() => histMapLeft.remove());
@@ -146,7 +152,8 @@ invalidation.then(() => histMapRight.remove());
     style: "raster",
     TileMatrixSet: "EPSG:900913x2",
     tms: false,
-    attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>'
+    attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>',
+    opacity: 1
   }).addTo(histMapLeft);
 
   // Remove this layer when mapLayerLeft changes (cell re-runs)
@@ -157,12 +164,14 @@ invalidation.then(() => histMapRight.remove());
     style: "raster",
     TileMatrixSet: "EPSG:900913x2",
     tms: false,
-    attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>'
+    attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>',
+    opacity: 1
   }).addTo(histMapRight);
 
   // Remove this layer when mapLayerRight changes (cell re-runs)
   invalidation.then(() => histMapRight.removeLayer(tileLayerRight));
 }
+
 ```
 
 </div> 

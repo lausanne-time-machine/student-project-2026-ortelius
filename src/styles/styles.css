@@ -5,6 +5,10 @@ main {
     text-align: left;
 }
 
+.observable-container {
+  font-family: inherit;
+}
+
 .content {}
 
 .content h1 {
