@@ -10,6 +10,24 @@ toc: false
 <p> TODO </p>
 
 ```js
+// overall layout
+
+const container = display(document.createElement("div"));
+container.style = "display: flex; gap: 1px;";
+
+const leftCol = document.createElement("div");
+leftCol.style = "display: flex; flex-direction: column; gap: 5px;";
+
+const rightCol = document.createElement("div");
+rightCol.style = "display: flex; flex-direction: column; gap: 5px;";
+
+container.appendChild(leftCol);
+container.appendChild(rightCol);
+```
+
+```js
+// historical map layers
+
 const lausanneLayers = [
   {label: "Lausanne Pictorial Plan (1721)",          name: "lausanne-1721-melotte-pictorial"},
   {label: "Lausanne Land Owners (1723)",             name: "lausanne-1723-melotte-owners"},
@@ -44,11 +62,25 @@ const lausanneLayers = [
 ```
 
 ```js
-const selectedLayer = view(Inputs.select(lausanneLayers, {
+// historical map selection 
+
+const selectLeft = Inputs.select(lausanneLayers, {
   label: "Historical map",
   format: d => d.label,
   value: lausanneLayers.find(d => d.name === "1831_Berney")
-}))
+})
+
+const selectRight = Inputs.select(lausanneLayers, {
+  label: "Historical map",
+  format: d => d.label,
+  value: lausanneLayers.find(d => d.name === "1831_Berney")
+});
+
+const mapLayerLeft = Generators.input(selectLeft);
+const mapLayerRight = Generators.input(selectRight);
+
+leftCol.appendChild(selectLeft);
+rightCol.appendChild(selectRight);
 ```
 
 ```js
@@ -58,31 +90,78 @@ function wmtsUrl(layerName) {
 }
 
 // Create map with OSM base layer
-const mapDiv = display(document.createElement("div"));
-mapDiv.style = "height: 560px; margin: 1em 0;";
 
-const historicalMap = L.map(mapDiv).setView([46.55, 6.632273], 12);
+const mapDivLeft = display(document.createElement("div"));
+mapDivLeft.style = "height: 560px; margin: 0em 0; width: 400px";
+
+const mapDivRight = display(document.createElement("div"));
+mapDivRight.style = "height: 560px; margin: 0em 0; width: 400px";
+
+leftCol.appendChild(mapDivLeft);
+rightCol.appendChild(mapDivRight);
+
+const histMapLeft = L.map(mapDivLeft).setView([46.55, 6.632273], 12);
+const histMapRight = L.map(mapDivRight).setView([46.55, 6.632273], 12);
+
+function syncMaps(map1, map2) {
+  let isSyncing = false;
+
+  function sync(source, target) {
+    if (isSyncing) return;
+    isSyncing = true;
+
+    const center = source.getCenter();
+    const zoom = source.getZoom();
+
+    target.setView(center, zoom, { animate: false });
+
+    isSyncing = false;
+  }
+
+  map1.on("moveend", () => sync(map1, map2));
+  map2.on("moveend", () => sync(map2, map1));
+}
+
+// Activate syncing
+syncMaps(histMapLeft, histMapRight);
 
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
   opacity: 0.4
-}).addTo(historicalMap);
+}).addTo(histMapLeft);
 
-invalidation.then(() => historicalMap.remove());
+L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
+  attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  opacity: 0.4
+}).addTo(histMapRight);
+
+invalidation.then(() => histMapLeft.remove());
+invalidation.then(() => histMapRight.remove());
 ```
 
 ```js
-// Reactively swap the historical tile layer whenever selectedLayer changes
+// Reactively swap the historical tile layer whenever mapLayerLeft changes
 {
-  const tileLayer = L.tileLayer(wmtsUrl(selectedLayer.name), {
+  const tileLayerLeft = L.tileLayer(wmtsUrl(mapLayerLeft.name), {
     style: "raster",
     TileMatrixSet: "EPSG:900913x2",
     tms: false,
     attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>'
-  }).addTo(historicalMap);
+  }).addTo(histMapLeft);
 
-  // Remove this layer when selectedLayer changes (cell re-runs)
-  invalidation.then(() => historicalMap.removeLayer(tileLayer));
+  // Remove this layer when mapLayerLeft changes (cell re-runs)
+  invalidation.then(() => histMapLeft.removeLayer(tileLayerLeft));
+
+  
+  const tileLayerRight = L.tileLayer(wmtsUrl(mapLayerRight.name), {
+    style: "raster",
+    TileMatrixSet: "EPSG:900913x2",
+    tms: false,
+    attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>'
+  }).addTo(histMapRight);
+
+  // Remove this layer when mapLayerRight changes (cell re-runs)
+  invalidation.then(() => histMapRight.removeLayer(tileLayerRight));
 }
 ```
 
