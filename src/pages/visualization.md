@@ -13,7 +13,13 @@ toc: false
 // overall layout
 
 const container = display(document.createElement("div"));
-container.style = "display: flex; gap: 1px;";
+container.style = "display: flex; flex-direction: column; gap: 10px;";
+
+const toggleDiv = document.createElement("div");
+toggleDiv.style = "display: flex; gap: 1px;";
+
+const mapsDiv = document.createElement("div");
+mapsDiv.style = "display: flex; flex-direction: row; gap: 1px;";
 
 const leftCol = document.createElement("div");
 leftCol.style = "display: flex; flex-direction: column; gap: 5px;";
@@ -21,8 +27,10 @@ leftCol.style = "display: flex; flex-direction: column; gap: 5px;";
 const rightCol = document.createElement("div");
 rightCol.style = "display: flex; flex-direction: column; gap: 5px;";
 
-container.appendChild(leftCol);
-container.appendChild(rightCol);
+container.appendChild(toggleDiv);
+container.appendChild(mapsDiv);
+mapsDiv.appendChild(leftCol);
+mapsDiv.appendChild(rightCol);
 ```
 
 ```js
@@ -172,6 +180,75 @@ invalidation.then(() => histMapRight.remove());
   invalidation.then(() => histMapRight.removeLayer(tileLayerRight));
 }
 
+```
+
+```js
+  const label = document.createElement("label");
+
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.id = "toggleRivers";
+  checkbox.checked = false;
+
+  label.appendChild(checkbox);
+  label.append(" Afficher les rivières");
+
+  toggleDiv.appendChild(label);
+
+  // Load the GeoJSON data
+  const geojsonLeft = await FileAttachment("../river_layers/lausanne-1888-cadastre-renove-points-20250409.geojson").json();
+
+  const geojsonLayerLeft = L.geoJSON(geojsonLeft, {
+    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+      radius: 3,
+      fillColor: "#e67e22",
+      color: "#d35400",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.6
+    }),
+    onEachFeature: (feature, layer) => {
+      if (feature.properties) {
+        layer.bindPopup(
+          Object.entries(feature.properties)
+            .map(([k, v]) => `<b>${k}:</b> ${v}`)
+            .join("<br>")
+        );
+      }
+    }
+  });
+
+  const geojsonRight = await FileAttachment("../river_layers/lausanne-1888-cadastre-renove-points-20250409.geojson").json();
+
+  const geojsonLayerRight = L.geoJSON(geojsonRight, {
+    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
+      radius: 3,
+      fillColor: "#e67e22",
+      color: "#d35400",
+      weight: 1,
+      opacity: 1,
+      fillOpacity: 0.6
+    }),
+    onEachFeature: (feature, layer) => {
+      if (feature.properties) {
+        layer.bindPopup(
+          Object.entries(feature.properties)
+            .map(([k, v]) => `<b>${k}:</b> ${v}`)
+            .join("<br>")
+        );
+      }
+    }
+  });
+
+  document.getElementById("toggleRivers").addEventListener("change", (e) => {
+    if (e.target.checked) {
+      geojsonLayerLeft.addTo(histMapLeft);
+      geojsonLayerRight.addTo(histMapRight);
+    } else {
+      histMapLeft.removeLayer(geojsonLayerLeft);
+      histMapRight.removeLayer(geojsonLayerRight);
+    }
+  });
 ```
 
 </div> 
