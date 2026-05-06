@@ -54,6 +54,7 @@ const selectLeft = Inputs.select(lausanneLayers, {
   format: d => d.label,
   value: lausanneLayers.find(d => d.name === "1831_Berney")
 })
+selectLeft.style = "width: 98%;";
 selectLeft.classList.add("observable-container");
 
 const selectRight = Inputs.select(lausanneLayers, {
@@ -61,6 +62,7 @@ const selectRight = Inputs.select(lausanneLayers, {
   format: d => d.label,
   value: lausanneLayers.find(d => d.name === "1831_Berney")
 });
+selectRight.style = "width: 98%;";
 selectRight.classList.add("observable-container");
 
 const mapLayerLeft = Generators.input(selectLeft);
