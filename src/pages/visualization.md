@@ -37,35 +37,12 @@ mapsDiv.appendChild(rightCol);
 // historical map layers
 
 const lausanneLayers = [
-  {label: "Lausanne Pictorial Plan (1721)",          name: "lausanne-1721-melotte-pictorial"},
-  {label: "Lausanne Land Owners (1723)",             name: "lausanne-1723-melotte-owners"},
-  {label: "Lausanne Official Map (1806)",            name: "lausanne-1806-official-emery"},
-  {label: "Lausanne Map (1824)",                     name: "lausanne-1824-spengler"},
-  {label: "Cadastre Berney (1831)",                  name: "1831_Berney"},
-  {label: "Cadastre Berney - LZW (1831)",            name: "1831_Berney_LZW"},
-  {label: "Lausanne Pichard Belt Project (1836)",    name: "lausanne-1836-ceinture-pichard"},
-  {label: "Lausanne Berney Ensemble Map (1838)",     name: "lausanne-1838-berney-ensemble"},
-  {label: "Lausanne Geological Map (1852)",          name: "lausanne-1852-zollikofer"},
-  {label: "Lausanne House Numbers Plan (1854)",      name: "lausanne-1854-weber"},
-  {label: "Lausanne Plan (1856)",                    name: "lausanne-1856-bazar"},
-  {label: "Lausanne Weber Map (1858)",               name: "lausanne-1858-weber"},
-  {label: "Lausanne Siegfried Topographic Map (1865)", name: "lausanne-1865-siegfried"},
-  {label: "Lausanne Map (1871)",                     name: "lausanne-1871-spengler"},
-  {label: "Lausanne Funicular Map (1871)",           name: "lausanne-1871-spengler-funiculaire"},
-  {label: "Lausanne Official Plan (1875)",           name: "lausanne-1875-decrousaz"},
-  {label: "Lausanne City Directory (1875)",          name: "lausanne-1875-indicateur-reber"},
-  {label: "Lausanne City Directory (1880)",          name: "lausanne-1880-indicateur-wurster"},
-  {label: "Lausanne Map (1890)",                     name: "lausanne-1890-lebet"},
-  {label: "Lausanne Parcel Plan (1900)",             name: "lausanne-1900-payot"},
-  {label: "Lausanne Tramway Plan (1903)",            name: "lausanne-1903-tramway-reber"},
-  {label: "Lausanne Parcel Plan (1910)",             name: "lausanne-1910-payot"},
-  {label: "Lausanne Official Plan (1913)",           name: "lausanne-1913-plan-officiel"},
-  {label: "Lausanne Transports Map (1925)",          name: "lausanne-1925-transports"},
-  {label: "Lausanne Pictorial Map (1926)",           name: "lausanne-1926-ubs"},
-  {label: "Lausanne Parcel Plan (1937)",             name: "lausanne-1937-cadastre"},
-  {label: "Lausanne Parcel Plan (1959)",             name: "lausanne-1959-cadastre"},
-  {label: "Lausanne Parcel Plan (1968)",             name: "lausanne-1968-cadastre"},
-  {label: "Lausanne Atlas Map (1970)",               name: "lausanne-1970-imhoff"},
+  // missing : melotte 1721
+  {label: "Cadastre Berney (1831)",                  name: "1831_Berney"}, //
+  {label: "Lausanne Map (1890)",                     name: "lausanne-1890-lebet"}, // might replace rénové 1888
+  {label: "Lausanne Parcel Plan (1937)",             name: "lausanne-1937-cadastre"}, // 
+  {label: "Lausanne Parcel Plan (1959)",             name: "lausanne-1959-cadastre"}, //
+  {label: "Contemporain 2021",                       name: "-"},
 ];
 ```
 
@@ -162,11 +139,11 @@ invalidation.then(() => histMapRight.remove());
     tms: false,
     attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>',
     opacity: 1
-  }).addTo(histMapLeft);
+  })
+  tileLayerLeft.addTo(histMapLeft);
 
   // Remove this layer when mapLayerLeft changes (cell re-runs)
   invalidation.then(() => histMapLeft.removeLayer(tileLayerLeft));
-
   
   const tileLayerRight = L.tileLayer(wmtsUrl(mapLayerRight.name), {
     style: "raster",
@@ -174,7 +151,8 @@ invalidation.then(() => histMapRight.remove());
     tms: false,
     attribution: '&copy; <a href="https://www.epfl.ch/schools/cdh/time-machine-unit/">EPFL Time Machine Unit</a>',
     opacity: 1
-  }).addTo(histMapRight);
+  })
+  tileLayerRight.addTo(histMapRight);
 
   // Remove this layer when mapLayerRight changes (cell re-runs)
   invalidation.then(() => histMapRight.removeLayer(tileLayerRight));
