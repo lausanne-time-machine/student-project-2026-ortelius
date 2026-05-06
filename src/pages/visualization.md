@@ -38,11 +38,11 @@ mapsDiv.appendChild(rightCol);
 
 const lausanneLayers = [
   // missing : melotte 1721
-  {label: "Cadastre Berney (1831)",                  name: "1831_Berney"}, //
-  {label: "Lausanne Map (1890)",                     name: "lausanne-1890-lebet"}, // might replace rénové 1888
-  {label: "Lausanne Parcel Plan (1937)",             name: "lausanne-1937-cadastre"}, // 
-  {label: "Lausanne Parcel Plan (1959)",             name: "lausanne-1959-cadastre"}, //
-  {label: "Contemporain 2021",                       name: "-"},
+  {label: "Cadastre Berney (1831)",      name: "1831_Berney",            rivers: "berney_rivers.geojson"}, //
+  {label: "Lausanne Map (1890)",         name: "lausanne-1890-lebet",    rivers: "renove_rivers.geojson"},// might replace rénové 1888
+  {label: "Lausanne Parcel Plan (1937)", name: "lausanne-1937-cadastre", rivers: "1937_rivers.geojson"}, // 
+  {label: "Lausanne Parcel Plan (1959)", name: "lausanne-1959-cadastre", rivers: "1959_rivers.geojson"}, //
+  {label: "Contemporain 2021",           name: "-",                      rivers: "contemporain_rivers.geojson"},
 ];
 ```
 
