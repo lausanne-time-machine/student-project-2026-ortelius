@@ -1,10 +1,10 @@
 
-- make maps larger -> full size
++ make maps larger -> full size
 + add toggelable river layer
-- filter only to relevant maps
++ filter only to relevant maps
 - display what replaced rivers
 - how to visu lake ?
-- how to visu stats ?
+- how to visu stats ? just png I think
 - add river layers
 
 Cartes :

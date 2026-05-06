@@ -7,25 +7,25 @@ toc: false
 
 <h3>Visualisation des données</h3>
 
-<p> TODO </p>
+<h4> Affichage comparé </h4>
 
 ```js
 // overall layout
 
 const container = display(document.createElement("div"));
-container.style = "display: flex; flex-direction: column; gap: 10px;";
+container.style = "display: flex; flex-direction: column; gap: 10px; width: 100%; margin: 1em 0;";
 
 const toggleDiv = document.createElement("div");
 toggleDiv.style = "display: flex; gap: 1px;";
 
 const mapsDiv = document.createElement("div");
-mapsDiv.style = "display: flex; flex-direction: row; gap: 1px;";
+mapsDiv.style = "display: flex; flex-direction: row; gap: 1px; width: 100%;";
 
 const leftCol = document.createElement("div");
-leftCol.style = "display: flex; flex-direction: column; gap: 5px;";
+leftCol.style = "display: flex; flex-direction: column; gap: 5px; width: 100%;";
 
 const rightCol = document.createElement("div");
-rightCol.style = "display: flex; flex-direction: column; gap: 5px;";
+rightCol.style = "display: flex; flex-direction: column; gap: 5px; width: 100%";
 
 container.appendChild(toggleDiv);
 container.appendChild(mapsDiv);
@@ -78,10 +78,10 @@ function wmtsUrl(layerName) {
 // Create map with OSM base layer
 
 const mapDivLeft = document.createElement("div");
-mapDivLeft.style = "height: 560px; margin: 0em 0; width: 400px";
+mapDivLeft.style = "height: 560px; margin: 0em 0; width: 100%";
 
 const mapDivRight = document.createElement("div");
-mapDivRight.style = "height: 560px; margin: 0em 0; width: 400px";
+mapDivRight.style = "height: 560px; margin: 0em 0; width: 100%";
 
 // finish global layout
 
