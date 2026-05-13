@@ -175,6 +175,10 @@ invalidation.then(() => histMapRight.remove());
 
   toggleDiv.appendChild(label);
 
+```
+
+```js
+{
   const riverStyle = {
     color: "#2980b9",
     weight: 3,
@@ -183,7 +187,7 @@ invalidation.then(() => histMapRight.remove());
 
   // Load the GeoJSON data
 
-  const geojsonLeft = await selectLeft.value.rivers.json();
+  const geojsonLeft = await mapLayerLeft.rivers.json();
 
   const geojsonLayerLeft = L.geoJSON(
     {
@@ -194,7 +198,9 @@ invalidation.then(() => histMapRight.remove());
     }
   );
 
-  const geojsonRight = await selectRight.value.rivers.json();
+  invalidation.then(() => histMapLeft.removeLayer(geojsonLayerLeft));
+
+  const geojsonRight = await mapLayerRight.rivers.json();
 
   const geojsonLayerRight = L.geoJSON(
     {
@@ -205,7 +211,14 @@ invalidation.then(() => histMapRight.remove());
     }
   );
 
-  document.getElementById("toggleRivers").addEventListener("change", (e) => {
+  invalidation.then(() => histMapRight.removeLayer(geojsonLayerRight));
+
+  if (checkbox.checked) {
+    geojsonLayerLeft.addTo(histMapLeft);
+    geojsonLayerRight.addTo(histMapRight);
+  }
+
+  const listener = (e) => {
     if (e.target.checked) {
       geojsonLayerLeft.addTo(histMapLeft);
       geojsonLayerRight.addTo(histMapRight);
@@ -213,7 +226,12 @@ invalidation.then(() => histMapRight.remove());
       histMapLeft.removeLayer(geojsonLayerLeft);
       histMapRight.removeLayer(geojsonLayerRight);
     }
-  });
+  };
+
+  checkbox.addEventListener("change", listener);
+
+  invalidation.then(() => checkbox.removeEventListener("change", listener));
+}
 ```
 
 </div> 
