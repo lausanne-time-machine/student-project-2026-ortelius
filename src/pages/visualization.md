@@ -37,12 +37,12 @@ mapsDiv.appendChild(rightCol);
 // historical map layers
 
 const lausanneLayers = [
-  // missing : melotte 1721
-  {label: "Cadastre Berney (1831)",      name: "1831_Berney",            rivers: "berney_rivers.geojson"}, //
-  {label: "Lausanne Map (1890)",         name: "lausanne-1890-lebet",    rivers: "renove_rivers.geojson"},// might replace rénové 1888
-  {label: "Lausanne Parcel Plan (1937)", name: "lausanne-1937-cadastre", rivers: "1937_rivers.geojson"}, // 
-  {label: "Lausanne Parcel Plan (1959)", name: "lausanne-1959-cadastre", rivers: "1959_rivers.geojson"}, //
-  {label: "Contemporain 2021",           name: "-",                      rivers: "contemporain_rivers.geojson"},
+  {label: "Cadastre Melotte 1721",       name: "lausanne-1721-melotte",  rivers: FileAttachment("../river_layers/melotte_rivers_crs84.geojson")},
+  {label: "Cadastre Berney (1831)",      name: "1831_Berney_LZW",        rivers: FileAttachment("../river_layers/berney_rivers_crs84.geojson")}, //
+  {label: "Cadastre rénové (1888)",      name: "lausanne-1888-renove",   rivers: FileAttachment("../river_layers/renove_rivers_crs84.geojson")},
+  {label: "Lausanne Parcel Plan (1937)", name: "lausanne-1937-cadastre", rivers: FileAttachment("../river_layers/1937_rivers_crs84.geojson")}, // 
+  {label: "Lausanne Parcel Plan (1959)", name: "lausanne-1959-cadastre", rivers: FileAttachment("../river_layers/1959_rivers_crs84.geojson")}, //
+  {label: "Contemporain 2021",           name: "-",                      rivers: FileAttachment("../river_layers/contemporain_rivers_crs84.geojson")},
 ];
 ```
 
@@ -52,7 +52,7 @@ const lausanneLayers = [
 const selectLeft = Inputs.select(lausanneLayers, {
   label: "Historical map",
   format: d => d.label,
-  value: lausanneLayers.find(d => d.name === "1831_Berney")
+  value: lausanneLayers.find(d => d.name === "lausanne-1721-melotte")
 })
 selectLeft.style = "width: 98%;";
 selectLeft.classList.add("observable-container");
@@ -60,7 +60,7 @@ selectLeft.classList.add("observable-container");
 const selectRight = Inputs.select(lausanneLayers, {
   label: "Historical map",
   format: d => d.label,
-  value: lausanneLayers.find(d => d.name === "1831_Berney")
+  value: lausanneLayers.find(d => d.name === "-")
 });
 selectRight.style = "width: 98%;";
 selectRight.classList.add("observable-container");
@@ -135,7 +135,7 @@ invalidation.then(() => histMapRight.remove());
 ```js
 // Reactively swap the historical tile layer whenever mapLayerLeft changes
 {
-  const tileLayerLeft = L.tileLayer(wmtsUrl(mapLayerLeft.name), {
+  var tileLayerLeft = L.tileLayer(wmtsUrl(mapLayerLeft.name), {
     style: "raster",
     TileMatrixSet: "EPSG:900913x2",
     tms: false,
@@ -175,50 +175,35 @@ invalidation.then(() => histMapRight.remove());
 
   toggleDiv.appendChild(label);
 
+  const riverStyle = {
+    color: "#2980b9",
+    weight: 3,
+    opacity: 1,
+  }
+
   // Load the GeoJSON data
-  const geojsonLeft = await FileAttachment("../river_layers/lausanne-1888-cadastre-renove-points-20250409.geojson").json();
 
-  const geojsonLayerLeft = L.geoJSON(geojsonLeft, {
-    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
-      radius: 3,
-      fillColor: "#e67e22",
-      color: "#d35400",
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.6
-    }),
-    onEachFeature: (feature, layer) => {
-      if (feature.properties) {
-        layer.bindPopup(
-          Object.entries(feature.properties)
-            .map(([k, v]) => `<b>${k}:</b> ${v}`)
-            .join("<br>")
-        );
-      }
+  const geojsonLeft = await selectLeft.value.rivers.json();
+
+  const geojsonLayerLeft = L.geoJSON(
+    {
+      type: "FeatureCollection",
+      features: geojsonLeft.features, 
+    }, {
+      style: riverStyle
     }
-  });
+  );
 
-  const geojsonRight = await FileAttachment("../river_layers/lausanne-1888-cadastre-renove-points-20250409.geojson").json();
+  const geojsonRight = await selectRight.value.rivers.json();
 
-  const geojsonLayerRight = L.geoJSON(geojsonRight, {
-    pointToLayer: (feature, latlng) => L.circleMarker(latlng, {
-      radius: 3,
-      fillColor: "#e67e22",
-      color: "#d35400",
-      weight: 1,
-      opacity: 1,
-      fillOpacity: 0.6
-    }),
-    onEachFeature: (feature, layer) => {
-      if (feature.properties) {
-        layer.bindPopup(
-          Object.entries(feature.properties)
-            .map(([k, v]) => `<b>${k}:</b> ${v}`)
-            .join("<br>")
-        );
-      }
+  const geojsonLayerRight = L.geoJSON(
+    {
+      type: "FeatureCollection",
+      features: geojsonRight.features, 
+    }, {
+      style: riverStyle
     }
-  });
+  );
 
   document.getElementById("toggleRivers").addEventListener("change", (e) => {
     if (e.target.checked) {
