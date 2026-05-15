@@ -9,36 +9,6 @@ main {
   font-family: inherit;
 }
 
-.hero-header {
-    text-align: center;
-    padding: 3em 1em;
-    background-color: #f8f9fa; /* Un fond gris très clair pour faire ressortir l'en-tête */
-    border-bottom: 3px solid #6b9ac4; /* Une ligne bleue pour le thème de l'eau */
-    border-radius: 8px 8px 0 0;
-    margin-bottom: 2em;
-}
-
-.section-divider {
-    border: 0;
-    height: 1px;
-    background-color: #ddd;
-    margin: 2em auto;
-    width: 80%;
-}
-
-.reading-section {
-    max-width: 800px; /* C'EST ÇA QUI FIXE LE PROBLÈME : empêche le texte de s'étaler sur tout l'écran */
-    margin: 0 auto;   /* Centre le bloc de texte au milieu de l'écran */
-    padding: 0 1em;
-}
-
-.reading-section p {
-    line-height: 1.6; /* Ajoute de l'espace entre les lignes */
-    font-size: 1.1rem;
-    margin-bottom: 1.5em;
-    color: #333;
-}
-
 .content {}
 
 .content h1 {
