@@ -7,7 +7,8 @@ toc: false
 
 <h3>Visualisation des données</h3>
 
-<h4> Affichage comparé </h4>
+<p>Pour découvrir les données sur lesquelles repose notre projet, la visualisation suivante permet de comparer l'évolution de Lausanne au fil du temps. En mettant face à face deux époques différentes, vous pouvez observer précisément comment les rivières et les rives du lac se sont transformées entre 1721 et aujourd'hui.</p>
+</div>
 
 ```js
 // overall layout
