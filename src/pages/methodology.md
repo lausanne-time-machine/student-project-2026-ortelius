@@ -4,11 +4,11 @@ title: Méthodologie
 
 <div class="content">
 
-<h5>Méthodologie</h5>
+<h3>Méthodologie</h3>
 
 <p>Afin de retracer l'évolution hydrologique de Lausanne, notre projet s'appuie sur une approche hybride croisant cartographie numérique (SIG), science des données et recherche historique. Ce travail a été structuré en quatre étapes clés.</p>
 
-<h4>1. Sélection des sources et ancrage chronologique</h4>
+<h4>1. Sélection des sources</h4>
 <p>Nous avons sélectionné des sources cartographiques produites sur trois siècles pour identifier les moments de rupture du développement urbain : les cadastres de Melotte (1721) et de Berney (1831) pour l'époque pré-industrielle, le cadastre Rénové (1888) pour l'entrée dans l'ère industrielle, les plans de ville de 1937 et 1959 pour l'expansion moderne, et enfin les données de 2021 comme référentiel contemporain.</p>
 
 <h4>2. Traitement spatial et vectorisation (QGIS)</h4>
@@ -27,6 +27,6 @@ title: Méthodologie
 <li><strong>Évolution du littoral et des remblais :</strong> Pour le lac, nous avons calculé les variations de surface des polygones de rive d'une période à l'autre. En croisant ces données avec le trait de côte linéaire, nous avons pu déterminer le volume de surface gagnée sur l'eau et la distance moyenne de recul du lac par rapport à son état de 1721.</li>
 </ul>
 
-<h4>4. Contextualisation et recherche documentaire</h4>
+<h4>4. Recherche historique</h4>
 <p>Cette étape finale consiste à croiser les résultats quantitatifs avec une recherche documentaire s'appuyant sur la littérature académique spécialisée et la plateforme <em>impresso</em>. Le recours à la presse historique permet de corréler systématiquement les données géométriques aux contextes sociopolitiques et aux décisions d'aménagement contemporains des relevés cartographiques. Cette comparaisons des sources permet d'associer un cadre explicatif aux évolutions mesurées, transformant ainsi les observations spatiales et statistiques brutes en une analyse historique cohérente du territoire lausannois.</p>
 </div>
