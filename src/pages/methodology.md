@@ -9,14 +9,6 @@ title: Méthodologie
 <p>Afin de retracer l'évolution hydrologique de Lausanne, notre projet s'appuie sur une approche hybride croisant cartographie numérique (SIG), science des données et recherche historique. Ce travail a été structuré en quatre étapes clés.</p>
 
 <h5>1. Sélection des sources et ancrage chronologique</h5>
-<p>Nous avons sélectionné des sources cartographiques produites sur trois siècles pour identifier les moments importants du développement urbain : les cadastres de Melotte (1721) et de Berney (1831) pour l'époque pré-industrielle, le cadastre Rénové (1888) pour l'entrée dans l'ère industrielle, les plans de ville de 1937 et 1959 pour l'expansion moderne, et enfin les données de 2021 comme référentiel contemporain.</p>
-
-<div class="reading-section">
-<h4>Méthodologie</h4>
-
-<p>Afin de retracer l'évolution hydrologique de Lausanne, notre projet s'appuie sur une approche hybride croisant cartographie numérique (SIG), science des données et recherche historique. Ce travail a été structuré en quatre étapes clés.</p>
-
-<h5>1. Sélection des sources et ancrage chronologique</h5>
 <p>Nous avons sélectionné des sources cartographiques produites sur trois siècles pour identifier les moments de rupture du développement urbain : les cadastres de Melotte (1721) et de Berney (1831) pour l'époque pré-industrielle, le cadastre Rénové (1888) pour l'entrée dans l'ère industrielle, les plans de ville de 1937 et 1959 pour l'expansion moderne, et enfin les données de 2021 comme référentiel contemporain.</p>
 
 <h5>2. Traitement spatial et vectorisation (QGIS)</h5>
