@@ -8,6 +8,8 @@ toc: false
 <h3>Visualisation des données</h3>
 
 <p>Pour découvrir les données sur lesquelles repose notre projet, la visualisation suivante permet de comparer l'évolution de Lausanne au fil du temps. En mettant face à face deux époques différentes, vous pouvez observer précisément comment les rivières et les rives du lac se sont transformées entre 1721 et aujourd'hui.</p>
+<br>
+<p>Dans cette visualisation, il est possible d'obtenir les tracés hydrographiques en cochant la case « Afficher les rivières ». De plus, si vous choisissez de comparer deux cartes d'époques consécutives, une boîte explicative apparaîtra automatiquement pour vous fournir une première explication sur les transformations survenues entre ces deux périodes.</p>
 </div>
 
 ```js
@@ -38,12 +40,12 @@ mapsDiv.appendChild(rightCol);
 // historical map layers
 
 const lausanneLayers = [
-  {label: "Cadastre Melotte 1721",       name: "lausanne-1721-melotte",  rivers: FileAttachment("../river_layers/melotte_rivers_crs84.geojson")},
+  {label: "Cadastre Melotte (1721)",       name: "lausanne-1721-melotte",  rivers: FileAttachment("../river_layers/melotte_rivers_crs84.geojson")},
   {label: "Cadastre Berney (1831)",      name: "1831_Berney_LZW",        rivers: FileAttachment("../river_layers/berney_rivers_crs84.geojson")}, //
   {label: "Cadastre rénové (1888)",      name: "lausanne-1888-renove",   rivers: FileAttachment("../river_layers/renove_rivers_crs84.geojson")},
   {label: "Lausanne Parcel Plan (1937)", name: "lausanne-1937-cadastre", rivers: FileAttachment("../river_layers/1937_rivers_crs84.geojson")}, // 
   {label: "Lausanne Parcel Plan (1959)", name: "lausanne-1959-cadastre", rivers: FileAttachment("../river_layers/1959_rivers_crs84.geojson")}, //
-  {label: "Contemporain 2021",           name: "-",                      rivers: FileAttachment("../river_layers/contemporain_rivers_crs84.geojson")},
+  {label: "Contemporain (2021)",           name: "-",                      rivers: FileAttachment("../river_layers/contemporain_rivers_crs84.geojson")},
 ];
 ```
 
@@ -165,7 +167,15 @@ invalidation.then(() => histMapRight.remove());
 
 ```js
   const label = document.createElement("label");
-
+  label.style = `
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0369a1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: sans-serif;
+    cursor: pointer;
+  `;
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.id = "toggleRivers";
@@ -182,8 +192,9 @@ invalidation.then(() => histMapRight.remove());
 {
   const riverStyle = {
     color: "#2980b9",
-    weight: 3,
+    weight: 6,
     opacity: 1,
+    
   }
 
   // Load the GeoJSON data
@@ -195,7 +206,15 @@ invalidation.then(() => histMapRight.remove());
       type: "FeatureCollection",
       features: geojsonLeft.features, 
     }, {
-      style: riverStyle
+      style: riverStyle,
+      onEachFeature: (feature, layer) => {
+        const riverName = feature.properties.name || feature.properties.Name;
+        
+        if (riverName && riverName.toLowerCase() !== "inconnu") {
+          layer.bindTooltip(`<span style="font-size: 16px;">${riverName}</span>`, { sticky: true });
+        }
+      }
+      
     }
   );
 
@@ -208,7 +227,14 @@ invalidation.then(() => histMapRight.remove());
       type: "FeatureCollection",
       features: geojsonRight.features, 
     }, {
-      style: riverStyle
+      style: riverStyle,
+      onEachFeature: (feature, layer) => {
+        const riverName = feature.properties.name || feature.properties.Name;
+        
+        if (riverName && riverName.toLowerCase() !== "inconnu") {
+          layer.bindTooltip(`<span style="font-size: 16px;">${riverName}</span>`, { sticky: true });
+        }
+      }
     }
   );
 
@@ -236,3 +262,45 @@ invalidation.then(() => histMapRight.remove());
 ```
 
 </div> 
+
+```js
+{
+  const idxLeft = lausanneLayers.indexOf(mapLayerLeft);
+  const idxRight = lausanneLayers.indexOf(mapLayerRight);
+  const isConsecutive = Math.abs(idxLeft - idxRight) === 1;
+
+  const minIdx = Math.min(idxLeft, idxRight);
+  let infoText = "";
+
+  if (isConsecutive) {
+    if (minIdx === 0) {
+      infoText = "Texte explicatif sur chgmt entre melotte et berney";
+    } else if (minIdx === 1) {
+      infoText = "Texte explicatif sur chgmt entre berney et reonve";
+    } else if (minIdx === 2) {
+      infoText = "Texte explicatif sur chgmt entre renove et 1937";
+    } else if (minIdx === 3) {
+      infoText = "Texte explicatif sur chgmt entre 1937 et 1959";
+    } else if (minIdx === 4) {
+      infoText = "Texte explicatif sur chgmt entre 1959 et 2021";
+    }
+  }
+
+  const infoBox = document.createElement("div");
+  infoBox.style = `
+    display: ${isConsecutive ? 'block' : 'none'};
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0369a1;
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-family: sans-serif;
+  `;
+  infoBox.innerHTML = infoText;
+
+  container.insertBefore(infoBox, mapsDiv);
+
+  invalidation.then(() => infoBox.remove());
+
+}
