@@ -47,8 +47,8 @@ const erasConfig = [
   { id: "1721", label: "Cadastre Melotte (1721)", wmts: "lausanne-1721-melotte", color: "#e41a1c" },
   { id: "1831", label: "Cadastre Berney (1831)",  wmts: "1831_Berney_LZW",       color: "#377eb8" },
   { id: "1888", label: "Cadastre rénové (1888)",  wmts: "lausanne-1888-renove",  color: "#4daf4a" },
-  { id: "1937", label: "Plan Parcel. (1937)",     wmts: "lausanne-1937-cadastre",color: "#984ea3" },
-  { id: "1959", label: "Plan Parcel. (1959)",     wmts: "lausanne-1959-cadastre",color: "#ff7f00" },
+  { id: "1937", label: "Lausanne Parcel Plan (1937)",     wmts: "lausanne-1937-cadastre",color: "#984ea3" },
+  { id: "1959", label: "Lausanne Parcel Plan (1959)",     wmts: "lausanne-1959-cadastre",color: "#ff7f00" },
   { id: "2021", label: "Contemporain (2021)",     wmts: "-",                     color: "#1e293b" }
 ];
 
