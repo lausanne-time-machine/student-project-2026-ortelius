@@ -3,13 +3,13 @@ title: Visualisation
 toc: false
 ---
 
-<div class="content">
+<div class="content text-container">
 
 <h3>Visualisation des données</h3>
 
 <p>Pour découvrir les données sur lesquelles repose notre projet, la visualisation suivante permet de comparer l'évolution de Lausanne au fil du temps. En mettant face à face deux époques différentes, vous pouvez observer précisément comment les rivières et les rives du lac se sont transformées entre 1721 et aujourd'hui.</p>
 <br>
-<p>Dans cette visualisation, il est possible d'obtenir les tracés hydrographiques en cochant la case « Afficher les rivières ». De plus, si vous choisissez de comparer deux cartes d'époques consécutives, une boîte explicative apparaîtra automatiquement pour vous fournir une première explication sur les transformations survenues entre ces deux périodes.</p>
+<p>Dans cette visualisation, il est possible d'obtenir les tracés hydrographiques en cochant la case « Afficher les rivières ». Si vous choisissez de comparer deux dates consécutives, une boîte explicative apparaîtra automatiquement pour vous fournir une première explication sur les transformations survenues entre ces deux périodes. De plus, lors de ces comparaisons consécutives, une case additionnelle fera également son apparition (sauf pour les plans de 1937 et 1959). Elle vous laissera découvrir précisément ce qui a physiquement remplacé les rivières.</p>
 </div>
 
 ```js
@@ -404,3 +404,8 @@ invalidation.then(() => histMapRight.remove());
   };
   checkboxRep.addEventListener("change", listenerRep);
   invalidation.then(() => checkboxRep.removeEventListener("change", listenerRep));
+```
+
+<div class="content text-container">
+  <p>Maintenant que ces données cartographiques ont pu être observées, il devient possible d'en extraire des résultats. C'est l'objet de l'analyse qui suit.</p>
+</div>

@@ -2,12 +2,11 @@
 title: Analyse
 ---
 
-<div class="content">
+<div class="content text-container">
 
 <h3>Analyse</h3>
 
 <h4>Analyse globale</h4>
-<h5>L'évolution du réseau hydrographique</h5>
 
 <p>Analyse globale qui montre les résultats stats sur Lausanne en général</p>
 

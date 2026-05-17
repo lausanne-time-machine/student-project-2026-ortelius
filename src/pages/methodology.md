@@ -2,9 +2,9 @@
 title: Méthodologie
 ---
 
-<div class="content">
+<div class="content text-container">
 
-<h3>Methodology</h3>
+<h3>Methodologie</h3>
 
 <p>Afin de retracer l'évolution hydrologique de Lausanne, notre projet s'appuie sur une approche hybride croisant cartographie numérique (SIG), science des données et recherche historique. Ce travail a été structuré en quatre étapes clés.</p>
 
@@ -29,4 +29,6 @@ title: Méthodologie
 
 <h4>Recherche historique</h4>
 <p>Cette étape finale consiste à croiser les résultats quantitatifs avec une recherche documentaire s'appuyant sur la littérature académique spécialisée et la plateforme <em>impresso</em>. Le recours à la presse historique permet de corréler systématiquement les données géométriques aux contextes sociopolitiques et aux décisions d'aménagement contemporains des relevés cartographiques. Cette comparaisons des sources permet d'associer un cadre explicatif aux évolutions mesurées, transformant ainsi les observations spatiales et statistiques brutes en une analyse historique cohérente du territoire lausannois.</p>
+
+<p>Avant de présenter les résultats de notre analyse, il est important de visualiser les données qui ont servi à ce travail grâce à l'exploration proposée dans la section suivante.</p>
 </div>

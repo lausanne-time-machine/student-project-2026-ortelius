@@ -34,22 +34,17 @@ Ilan Baud, Szabina Horvath-Mikulas, Philippe Pache, Mathilde Peruzzo, Dorine Wal
 
 ---
 
-<h3>Introduction</h3>
+<div class="content text-container">
+  <p>Lausanne est une ville façonnée par l'eau. Pourtant, il est aujourd'hui difficile de s'en apercevoir. Si le relief particulier de la ville témoigne encore de leur passage, les rivières qui ont creusé ces vallons ont depuis longtemps disparu sous le tissu urbain.</p>
+  <p>Où sont passés le Flon, la Louve et leurs nombreux affluents ? Et jusqu'où s'étendait véritablement le lac Léman ? Ce projet propose de remonter le temps à la découverte des modifications hydrologiques de Lausanne. En croisant la cartographie moderne et les archives historiques, nous avons reconstitué trois siècles d'évolution urbaine pour comprendre comment l'eau, autrefois ressource vitale au cœur de la ville, a été progressivement effacée du paysage, jusqu'à la modification des rives du Léman.</p>
 
-<p>Lausanne est une ville façonnée par l'eau. Pourtant, il est aujourd'hui difficile de s'en apercevoir. Si le relief particulier de la ville témoigne encore de leur passage, les rivières qui ont creusé ces vallons ont depuis longtemps disparu sous le tissu urbain.</p>
-
-<p>Où sont passés le Flon, la Louve et leurs nombreux affluents ? Et jusqu'où s'étendait véritablement le lac Léman ? Ce projet propose de remonter le temps à la découverte des modifications hydrologiques de Lausanne. En croisant la cartographie moderne et les archives historiques, nous avons reconstitué trois siècles d'évolution urbaine pour comprendre comment l'eau, autrefois ressource vitale au cœur de la ville, a été progressivement effacée du paysage, jusqu'à la modification des rives du Léman.</p>
-
-<h3>Problématique</h3>
-
-<p>Au fil des siècles, la croissance démographique, industrielle et urbaine de Lausanne a transformé son réseau hydrographique. Ce processus soulève plusieurs questions fondamentales pour l'histoire de la ville :</p>
-
-<ul>
-<li>Comment le réseau hydrographique de la ville a-t-il été altéré, et quelle proportion de ces cours d'eau a véritablement disparu en surface ?</li>
-<li>Comment la morphologie des rives du lac a-t-elle évolué ?</li>
-<li>Quels enjeux sanitaires, industriels et historiques ont motivé l'ensemble de ces modifications hydriques du paysage lausannois ?</li>
-</ul>
-
+  <p>Au fil des siècles, la croissance démographique, industrielle et urbaine de Lausanne a transformé son réseau hydrographique. Ce processus soulève plusieurs questions fondamentales pour l'histoire de la ville :</p>
+  <ul>
+    <li>Comment le réseau hydrographique de la ville a-t-il été altéré, et quelle proportion de ces cours d'eau a véritablement disparu en surface ?</li>
+    <li>Comment la morphologie des rives du lac a-t-elle évolué ?</li>
+    <li>Quels enjeux sanitaires, industriels et historiques ont motivé l'ensemble de ces modifications hydriques du paysage lausannois ?</li>
+  </ul>
+<p>La méthodologie utilisée afin de répondre aux questions de ce projet est présentée dans la section suivante.</p>
 </div>
 
 ---
