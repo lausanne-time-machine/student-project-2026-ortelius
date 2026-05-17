@@ -83,10 +83,10 @@ function wmtsUrl(layerName) {
 // Create map with OSM base layer
 
 const mapDivLeft = document.createElement("div");
-mapDivLeft.style = "height: 560px; margin: 0em 0; width: 100%";
+mapDivLeft.style = "height: 560px; margin: 0em 0; width: 100%; border-radius: 8px; border: 2px solid #cbd5e1; overflow: hidden;";
 
 const mapDivRight = document.createElement("div");
-mapDivRight.style = "height: 560px; margin: 0em 0; width: 100%";
+mapDivRight.style = "height: 560px; margin: 0em 0; width: 100%; border-radius: 8px; border: 2px solid #cbd5e1; overflow: hidden;";
 
 // finish global layout
 
@@ -186,6 +186,25 @@ invalidation.then(() => histMapRight.remove());
 
   toggleDiv.appendChild(label);
 
+  const labelRep = document.createElement("label");
+  labelRep.style = `
+    background-color: #f0f9ff;
+    border: 1px solid #bae6fd;
+    color: #0369a1;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-family: sans-serif;
+    cursor: pointer;
+    display: none; /* Caché par défaut */
+  `;
+  const checkboxRep = document.createElement("input");
+  checkboxRep.type = "checkbox";
+  checkboxRep.id = "toggleReplacements";
+  checkboxRep.checked = false;
+
+  labelRep.appendChild(checkboxRep);
+  labelRep.append(" Afficher les éléments remplacés");
+  toggleDiv.appendChild(labelRep);
 ```
 
 ```js
@@ -304,3 +323,84 @@ invalidation.then(() => histMapRight.remove());
   invalidation.then(() => infoBox.remove());
 
 }
+
+// --- Chargement des remplacements ---
+  const pairName = [mapLayerLeft.name, mapLayerRight.name].sort().join("|");
+  let repFiles = [];
+
+  if (pairName === "1831_Berney_LZW|lausanne-1721-melotte") {
+    repFiles = [FileAttachment("../replacement_rivers/comp_melotte_berney.geojson")];
+  } else if (pairName === "1831_Berney_LZW|lausanne-1888-renove") {
+    repFiles = [FileAttachment("../replacement_rivers/comp_berney_renove.geojson")];
+  } else if (pairName === "-|lausanne-1888-renove") {
+    repFiles = [
+      FileAttachment("../replacement_rivers/comp_renove_contemporain_buildings.geojson"),
+      FileAttachment("../replacement_rivers/comp_renove_contemporain_landuse.geojson"),
+      FileAttachment("../replacement_rivers/comp_renove_contemporain_naturals.geojson"),
+      FileAttachment("../replacement_rivers/comp_renove_contemporain_railways.geojson"),
+      FileAttachment("../replacement_rivers/comp_renove_contemporain_roads.geojson")
+    ];
+  }
+
+  const repGroupRight = L.featureGroup();
+  invalidation.then(() => histMapRight.removeLayer(repGroupRight));
+
+  if (repFiles.length > 0) {
+    labelRep.style.display = "block"; 
+    const repStyle = { color: "#e74c3c", weight: 2, fillColor: "#e74c3c", fillOpacity: 0.5 };
+    
+    // Chargement de tous les fichiers de la paire
+    Promise.all(repFiles.map(f => f.json())).then(dataArr => {
+      dataArr.forEach(data => {
+        L.geoJSON(data, { 
+          style: repStyle,
+          onEachFeature: (feature, layer) => {
+            const props = feature.properties || {};
+            let tooltipContent = [];
+
+            // 1. Cas Melotte - Berney
+            if (pairName === "1831_Berney_LZW|lausanne-1721-melotte") {
+              if (props.class) tooltipContent.push(`<div><b>Classe :</b> ${props.class}</div>`);
+              if (props.use) tooltipContent.push(`<div><b>Usage :</b> ${props.use}</div>`);
+              if (props.own_name || props.own_surname) {
+                const prenom = props.own_name || "";
+                const nom = props.own_surname || "";
+                tooltipContent.push(`<div><b>Propriétaire :</b> ${prenom} ${nom}`.trim() + '</div>');
+              }
+            } 
+            // 2. Cas Berney - Rénové
+            else if (pairName === "1831_Berney_LZW|lausanne-1888-renove") {
+              if (props.class) tooltipContent.push(`<div><b>Classe :</b> ${props.class}</div>`);
+            } 
+            // 3. Cas Rénové - Contemporain
+            else if (pairName === "-|lausanne-1888-renove") {
+              if (props.type) tooltipContent.push(`<div><b>Type :</b> ${props.type}</div>`);
+              if (props.name) tooltipContent.push(`<div><b>Nom :</b> ${props.name}</div>`);
+            }
+
+            // Si on a des infos, on applique le tooltip sur l'élément survolé avec un alignement vertical strict (flex-column)
+            if (tooltipContent.length > 0) {
+              layer.bindTooltip(
+                `<div style="display: flex; flex-direction: column; gap: 5px; font-family: sans-serif; font-size: 13px; line-height: 1.4; max-width: 250px; white-space: normal;">
+                  ${tooltipContent.join("")}
+                </div>`, 
+                { sticky: true }
+              );
+            }
+          }
+        }).addTo(repGroupRight);
+      });
+    });
+  } else {
+    labelRep.style.display = "none";
+    checkboxRep.checked = false;
+  }
+// --- Logique du bouton Remplacements ---
+  if (checkboxRep.checked) repGroupRight.addTo(histMapRight);
+
+  const listenerRep = (e) => {
+    if (e.target.checked) repGroupRight.addTo(histMapRight);
+    else histMapRight.removeLayer(repGroupRight);
+  };
+  checkboxRep.addEventListener("change", listenerRep);
+  invalidation.then(() => checkboxRep.removeEventListener("change", listenerRep));
